@@ -1,6 +1,7 @@
 package br.com.system.helpdesk.controllers.rest;
 
 import br.com.system.helpdesk.domain.Tecnico;
+import br.com.system.helpdesk.domain.dtos.TecnicoDTO;
 import br.com.system.helpdesk.services.TecnicoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +19,8 @@ public class TecnicoController {
     //TODO: ResponseEntity é uma classe que representa toda resposta HTTP para trabalhar com ApisRESTFull
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Tecnico> buscarTecnicoId(@PathVariable Integer id){
+    public ResponseEntity<TecnicoDTO> buscarTecnicoId(@PathVariable Integer id){
         Tecnico tecnico = tecnicoService.buscarTecnicoPorId(id);
-        return ResponseEntity.ok().body(tecnico);
+        return ResponseEntity.ok().body(new TecnicoDTO(tecnico));
     }
 }
