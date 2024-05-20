@@ -1,6 +1,7 @@
 package br.com.system.helpdesk.services;
 
 import br.com.system.helpdesk.domain.Tecnico;
+import br.com.system.helpdesk.domain.dtos.TecnicoDTO;
 import br.com.system.helpdesk.repositories.TecnicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,5 +21,11 @@ public class TecnicoService {
 
     public List<Tecnico> buscarTodosOsTecnicos() {
         return tecnicoRepository.findAll();
+    }
+
+    public Tecnico salvarTecnico(TecnicoDTO tecnicoDTO) {
+        tecnicoDTO.setId(null);
+        Tecnico nevoTecnico = new Tecnico(tecnicoDTO);
+        return tecnicoRepository.save(nevoTecnico);
     }
 }

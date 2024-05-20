@@ -25,10 +25,12 @@ public class TecnicoDTO implements Serializable {
 
     public TecnicoDTO() {
         super();
+        addPerfil(Perfil.CLIENTE);
     }
 
     public TecnicoDTO(Tecnico tecnico) {
         super();
+        addPerfil(Perfil.CLIENTE);
         this.id = tecnico.getId();
         this.nome = tecnico.getNome();
         this.cpf = tecnico.getCpf();
