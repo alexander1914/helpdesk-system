@@ -3,6 +3,7 @@ package br.com.system.helpdesk.controllers.rest;
 import br.com.system.helpdesk.domain.Tecnico;
 import br.com.system.helpdesk.domain.dtos.TecnicoDTO;
 import br.com.system.helpdesk.services.TecnicoService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -36,7 +37,7 @@ public class TecnicoController {
     }
 
     @PostMapping
-    public ResponseEntity<TecnicoDTO> salvarTecnico(@RequestBody TecnicoDTO tecnicoDTO){
+    public ResponseEntity<TecnicoDTO> salvarTecnico(@Valid @RequestBody TecnicoDTO tecnicoDTO){
         Tecnico novoTecnico = tecnicoService.salvarTecnico(tecnicoDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
