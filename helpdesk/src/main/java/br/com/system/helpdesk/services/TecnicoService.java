@@ -1,8 +1,12 @@
 package br.com.system.helpdesk.services;
 
+import br.com.system.helpdesk.domain.Pessoa;
 import br.com.system.helpdesk.domain.Tecnico;
 import br.com.system.helpdesk.domain.dtos.TecnicoDTO;
+import br.com.system.helpdesk.repositories.PessoaRepository;
 import br.com.system.helpdesk.repositories.TecnicoRepository;
+import br.com.system.helpdesk.services.exceptions.DataIntegrityViolationException;
+import br.com.system.helpdesk.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +17,8 @@ import java.util.Optional;
 public class TecnicoService {
     @Autowired
     private TecnicoRepository tecnicoRepository;
+    @Autowired
+    private PessoaRepository pessoaRepository;
 
     public Tecnico buscarTecnicoPorId(Integer id){
         Optional<Tecnico> tecnico = tecnicoRepository.findById(id);
@@ -25,7 +31,20 @@ public class TecnicoService {
 
     public Tecnico salvarTecnico(TecnicoDTO tecnicoDTO) {
         tecnicoDTO.setId(null);
+        validaPorCpfEemail(tecnicoDTO);
         Tecnico nevoTecnico = new Tecnico(tecnicoDTO);
         return tecnicoRepository.save(nevoTecnico);
+    }
+
+    private void validaPorCpfEemail(TecnicoDTO tecnicoDTO) {
+        Optional<Pessoa> pessoa = pessoaRepository.findByCpf(tecnicoDTO.getCpf());
+        if (pessoa.isPresent() && pessoa.get().getId() != tecnicoDTO.getId()){
+            throw new DataIntegrityViolationException("CPF já cadastrado no sistema !");
+        }
+
+        pessoa = pessoaRepository.findByEmail(tecnicoDTO.getEmail());
+        if (pessoa.isPresent() && pessoa.get().getId() != tecnicoDTO.getId()){
+            throw new DataIntegrityViolationException("E-mail já cadastrado no sistema !");
+        }
     }
 }

@@ -1,4 +1,4 @@
-package br.com.system.helpdesk.services;
+package br.com.system.helpdesk.services.exceptions;
 
 public class ObjectNotFoundException extends RuntimeException {
     public static final long serialVersionUID = 1L;
