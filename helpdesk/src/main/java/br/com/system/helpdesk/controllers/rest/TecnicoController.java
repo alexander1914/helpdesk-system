@@ -20,7 +20,7 @@ public class TecnicoController {
 
     @Autowired
     private TecnicoService tecnicoService;
-    //TODO: ResponseEntity é uma classe que representa toda resposta HTTP para trabalhar com ApisRESTFull
+    //TODO: ResponseEntity é uma classe que representa toda resposta HTTP para trabalhar com APIsRESTfull
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<TecnicoDTO> buscarTecnicoId(@PathVariable Integer id){
