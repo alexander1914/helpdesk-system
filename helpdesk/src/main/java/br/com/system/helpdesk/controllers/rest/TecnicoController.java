@@ -30,10 +30,10 @@ public class TecnicoController {
 
     @GetMapping
     public ResponseEntity<List<TecnicoDTO>> buscarTodosOsTecnicos(){
-        List<Tecnico> listaEntidades = tecnicoService.buscarTodosOsTecnicos();
-        List<TecnicoDTO> listaDTOs = listaEntidades.stream()
+        List<Tecnico> listaTecnicosEntidade = tecnicoService.buscarTodosOsTecnicos();
+        List<TecnicoDTO> listaTecnicosDTOs = listaTecnicosEntidade.stream()
                 .map(tecnicos -> new TecnicoDTO(tecnicos)).collect(Collectors.toList());
-        return ResponseEntity.ok().body(listaDTOs);
+        return ResponseEntity.ok().body(listaTecnicosDTOs);
     }
 
     @PostMapping
