@@ -36,7 +36,7 @@ public class RestControllerExceptionHandler {
                                                          HttpServletRequest request){
 
         ValidationError errors = new ValidationError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(),
-                "Erro de Validação", "Erro nas valições dos campos obrigatórios abaixo: ", request.getRequestURI());
+                "Erro de Validação", "Erro nas validações dos campos obrigatórios abaixo: ", request.getRequestURI());
 
         for (FieldError x : ex.getBindingResult().getFieldErrors()){
             errors.addError(x.getField(), x.getDefaultMessage());
