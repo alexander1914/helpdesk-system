@@ -21,14 +21,14 @@ public class ChamadoController {
     private ChamadoService chamadoService;
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<ChamadoDTO> buscarChamadoId(@PathVariable Integer id){
+    public ResponseEntity<ChamadoDTO> buscarChamadoId(@PathVariable Integer id) {
         Chamado chamado = chamadoService.buscarChamadoPorId(id);
 
         return ResponseEntity.ok().body(new ChamadoDTO(chamado));
     }
 
     @GetMapping
-    public ResponseEntity<List<ChamadoDTO>> buscarTodosChamados(){
+    public ResponseEntity<List<ChamadoDTO>> buscarTodosChamados() {
         List<Chamado> listaChamadosEntidade = chamadoService.buscarTodosOsChamados();
 
         List<ChamadoDTO> listaChamadosDTO = listaChamadosEntidade.stream()
@@ -38,7 +38,7 @@ public class ChamadoController {
     }
 
     @PostMapping
-    public ResponseEntity<ChamadoDTO> criarUmChamado(@Valid @RequestBody ChamadoDTO chamadoDTO){
+    public ResponseEntity<ChamadoDTO> criarUmChamado(@Valid @RequestBody ChamadoDTO chamadoDTO) {
         Chamado novoChamado = chamadoService.salvarChamado(chamadoDTO);
 
         URI uri = ServletUriComponentsBuilder
@@ -47,5 +47,13 @@ public class ChamadoController {
                 .buildAndExpand(novoChamado.getId()).toUri();
 
         return ResponseEntity.created(uri).build();
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<ChamadoDTO> atualizarChamado(@PathVariable Integer id, @Valid @RequestBody ChamadoDTO chamadoDTO) {
+
+        Chamado chamado = chamadoService.atulizarChamado(id, chamadoDTO);
+
+        return ResponseEntity.ok().body(new ChamadoDTO(chamado));
     }
 }

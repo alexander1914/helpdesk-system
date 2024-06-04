@@ -11,6 +11,7 @@ import br.com.system.helpdesk.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,20 +38,33 @@ public class ChamadoService {
         return chamadoRepository.save(novoChamado(chamadoDTO));
     }
 
+    public Chamado atulizarChamado(Integer id, ChamadoDTO chamadoDTO){
+        chamadoDTO.setId(id);
+
+        Chamado antigoChamado = buscarChamadoPorId(id);
+        antigoChamado = novoChamado(chamadoDTO);
+
+        return chamadoRepository.save(antigoChamado);
+    }
+
     private Chamado novoChamado(ChamadoDTO chamadoDTO){
         Tecnico tecnico = tecnicoService.buscarTecnicoPorId(chamadoDTO.getTecnico());
         Cliente cliente = clienteService.buscarClientePorId(chamadoDTO.getCliente());
 
         Chamado chamado = new Chamado();
-        if (chamado.getId() != null){
+        if (chamadoDTO.getId() != null){
             chamado.setId(chamadoDTO.getId());
+        }
+
+        if (chamadoDTO.getStatus().equals(2)){
+            chamado.setDataFechamento(LocalDate.now());
         }
 
         chamado.setTecnico(tecnico);
         chamado.setCliente(cliente);
         chamado.setPrioridade(Prioridade.toEnum(chamadoDTO.getPrioridade()));
         chamado.setStatus(Status.toEnum(chamadoDTO.getStatus()));
-        chamado.setTitulo(chamado.getTitulo());
+        chamado.setTitulo(chamadoDTO.getTitulo());
         chamado.setObservacoes(chamadoDTO.getObservacoes());
 
         return chamado;
