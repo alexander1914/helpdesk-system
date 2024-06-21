@@ -1,6 +1,7 @@
 package br.com.system.helpdesk.config;
 
 import br.com.system.helpdesk.security.JWTAuthenticationFilter;
+import br.com.system.helpdesk.security.JWTAuthorizationFilter;
 import br.com.system.helpdesk.security.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -45,11 +46,10 @@ public class SecurityConfig {
         http
                 .cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(authz -> authz
-                        .anyRequest().authenticated()
+                .authorizeHttpRequests(authz -> authz.anyRequest().authenticated()
                 )
                 .addFilter(new JWTAuthenticationFilter(authenticationManager, jwtUtil))
-                //.addFilter(new JWTAuthorizationFilter(authenticationManager, jwtUtil, userDetailsService))
+                .addFilter(new JWTAuthorizationFilter(authenticationManager, jwtUtil, userDetailsService))
                 .authenticationManager(authenticationManager)
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS));

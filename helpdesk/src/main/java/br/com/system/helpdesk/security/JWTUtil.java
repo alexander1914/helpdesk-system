@@ -1,5 +1,6 @@
 package br.com.system.helpdesk.security;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,11 +17,41 @@ public class JWTUtil {
     @Value("${jwt.secret}")
     private String secret;
 
-    public String generateToken(String email){
+    public String generateToken(String email) {
         return Jwts.builder()
                 .setSubject(email)
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(SignatureAlgorithm.HS512, secret.getBytes())
                 .compact();
+    }
+
+    public boolean tokenValido(String token) {
+        Claims claims = getClaims(token);
+        if (claims != null) {
+            String username = claims.getSubject();
+            Date expirationDate = claims.getExpiration();
+            Date nowDate = new Date(System.currentTimeMillis());
+
+            if (username != null & expirationDate != null & nowDate.before(expirationDate)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private Claims getClaims(String token) {
+        try {
+            return Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJwt(token).getBody();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public String getUsername(String token) {
+        Claims claims = getClaims(token);
+        if (claims != null) {
+            return claims.getSubject();
+        }
+        return null;
     }
 }
