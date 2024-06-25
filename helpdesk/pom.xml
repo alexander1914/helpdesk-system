@@ -14,7 +14,7 @@
 	<name>helpdesk</name>
 	<description>At the moment, I am currently working a project about helpdesk service with Angular and Java spring boot</description>
 	<properties>
-		<java.version>22</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
