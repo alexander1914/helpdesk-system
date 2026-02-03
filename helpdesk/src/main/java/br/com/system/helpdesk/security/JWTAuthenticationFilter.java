@@ -34,7 +34,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             CredenciaisDTO credenciaisDTO = new ObjectMapper().readValue(request.getInputStream(), CredenciaisDTO.class);
 
             UsernamePasswordAuthenticationToken authenticationToken =
-                    new UsernamePasswordAuthenticationToken(credenciaisDTO.getEmail(), credenciaisDTO.getSenha(),
+                    new UsernamePasswordAuthenticationToken(credenciaisDTO.getEmail(), credenciaisDTO.getPassword(),
                             new ArrayList<>());
 
             Authentication authentication = authenticationManager.authenticate(authenticationToken);
@@ -56,6 +56,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS, DELETE");
         response.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type, enctype, Location");
+        response.setHeader("Access-Control-Expose-Headers", "Authorization");
         response.setHeader("Authorization", "Bearer " + token);
     }
 
