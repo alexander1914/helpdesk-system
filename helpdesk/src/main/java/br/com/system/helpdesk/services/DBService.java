@@ -33,15 +33,35 @@ public class DBService {
         Tecnico tec1 = new Tecnico(null, "Alexander Oliveira", "4067889960",
                 "alexander.oliveira99@gmail.com", encoder.encode("sep1914"));
         tec1.addPerfis(Perfil.ADMIN);
+        Tecnico tec2 = new Tecnico(null, "Samuel Oliveira", "90274737060",
+                "samuel.oliveira99@gmail.com", encoder.encode("123456"));
+        tec1.addPerfis(Perfil.TECNICO);
+        Tecnico tec3 = new Tecnico(null, "Joel Maciel", "81168226082",
+                "joel.maiel@gmail.com", encoder.encode("123456"));
+        tec1.addPerfis(Perfil.TECNICO);
+        Tecnico tec4 = new Tecnico(null, "Eduarda Diamond", "94437994051",
+                "eduarda.dioamond@gmail.com", encoder.encode("123456"));
+        tec1.addPerfis(Perfil.TECNICO);
+        Tecnico tec5 = new Tecnico(null, "Bruna Carlos", "07525513023",
+                "bruna.carlos@gmail.com", encoder.encode("123456"));
+        tec1.addPerfis(Perfil.TECNICO);
 
-        Cliente cli1 = new Cliente(null, "Nathalia Silva", "12345678990",
-                "teste.silva@outlool.com", encoder.encode("123456"));
+        Cliente cli1 = new Cliente(null, "Eduarda Silva", "12345678990",
+                "eduarda.silva@gmail.com", encoder.encode("123456"));
+        Cliente cli2 = new Cliente(null, "Maria Silva", "01319117082",
+                "maria.silva@gmail.com", encoder.encode("123456"));
+        Cliente cli3 = new Cliente(null, "Junior Joel", "88041397069",
+                "junior.joel@gmail.com", encoder.encode("123456"));
+        Cliente cli4 = new Cliente(null, "Carla Maia", "35992022066",
+                "carla.maia@gmail.com", encoder.encode("123456"));
+        Cliente cli5 = new Cliente(null, "João Silva", "33933595096",
+                "joao.silva@gmail.com", encoder.encode("123456"));
 
         Chamado chamado = new Chamado(null, Prioridade.ALTA, Status.ANDAMENTO, "CH00",
                 "testando o chamando", tec1, cli1);
 
-        tecnicoRepository.saveAll(Arrays.asList(tec1));
-        clienteRepository.saveAll(Arrays.asList(cli1));
+        tecnicoRepository.saveAll(Arrays.asList(tec1, tec2, tec3, tec4, tec5));
+        clienteRepository.saveAll(Arrays.asList(cli1, cli2, cli3, cli4, cli5));
         chamadoRepository.saveAll(Arrays.asList(chamado));
     }
 }
