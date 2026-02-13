@@ -30,21 +30,25 @@ public class DBService {
     private BCryptPasswordEncoder encoder;
 
     public void instanciaDB(){
-        Tecnico tec1 = new Tecnico(null, "Alexander Oliveira", "4067889960",
+        Tecnico tec1 = new Tecnico(null, "Alexander Oliveira", "40678899600",
                 "alexander.oliveira99@gmail.com", encoder.encode("sep1914"));
         tec1.addPerfis(Perfil.ADMIN);
+
         Tecnico tec2 = new Tecnico(null, "Samuel Oliveira", "90274737060",
                 "samuel.oliveira99@gmail.com", encoder.encode("123456"));
-        tec1.addPerfis(Perfil.TECNICO);
+        tec2.addPerfis(Perfil.TECNICO);
+
         Tecnico tec3 = new Tecnico(null, "Joel Maciel", "81168226082",
                 "joel.maiel@gmail.com", encoder.encode("123456"));
-        tec1.addPerfis(Perfil.TECNICO);
+        tec3.addPerfis(Perfil.TECNICO);
+
         Tecnico tec4 = new Tecnico(null, "Eduarda Diamond", "94437994051",
                 "eduarda.dioamond@gmail.com", encoder.encode("123456"));
-        tec1.addPerfis(Perfil.TECNICO);
+        tec4.addPerfis(Perfil.TECNICO);
+
         Tecnico tec5 = new Tecnico(null, "Bruna Carlos", "07525513023",
                 "bruna.carlos@gmail.com", encoder.encode("123456"));
-        tec1.addPerfis(Perfil.TECNICO);
+        tec5.addPerfis(Perfil.TECNICO);
 
         Cliente cli1 = new Cliente(null, "Eduarda Silva", "12345678990",
                 "eduarda.silva@gmail.com", encoder.encode("123456"));

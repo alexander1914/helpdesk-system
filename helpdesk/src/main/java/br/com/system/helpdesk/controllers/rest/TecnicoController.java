@@ -15,6 +15,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @Controller
 @RequestMapping(value = "/tecnicos")
 public class TecnicoController {

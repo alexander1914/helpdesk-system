@@ -42,8 +42,8 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         if(jwtUtil.tokenValido(token)) {
             String username = jwtUtil.getUsername(token);
             UserDetails details = userDetailsService.loadUserByUsername(username);
-            return new UsernamePasswordAuthenticationToken(details.getUsername(),
-                    null, details.getAuthorities());
+            // Passe 'details' em vez de 'details.getUsername()'
+            return new UsernamePasswordAuthenticationToken(details, null, details.getAuthorities());
         }
         return null;
     }

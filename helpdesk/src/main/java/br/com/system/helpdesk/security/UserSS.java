@@ -11,7 +11,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class UserSS implements UserDetails {
-    private  static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     private Integer id;
     private String email;
@@ -23,8 +23,11 @@ public class UserSS implements UserDetails {
         this.id = id;
         this.email = email;
         this.senha = senha;
-        this.authorities = perfis.stream().map(x ->
-                new SimpleGrantedAuthority(x.getDescricao())).collect(Collectors.toSet());
+        // Adicionamos o prefixo ROLE_ e usamos o campo da classe
+        this.authorities = perfis.stream()
+                // Use apenas o getDescricao()
+                .map(x -> new SimpleGrantedAuthority(x.getDescricao()))
+                .collect(Collectors.toSet());
     }
 
     public Integer getId() {
@@ -33,19 +36,17 @@ public class UserSS implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-
-        return List.of();
+        // CORREÇÃO: Retorne a variável que você preencheu no construtor!
+        return authorities;
     }
 
     @Override
     public String getPassword() {
-
         return senha;
     }
 
     @Override
     public String getUsername() {
-
         return email;
     }
 
