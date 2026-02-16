@@ -1,4 +1,7 @@
 package br.com.system.helpdesk.domain.enums;
+
+import com.fasterxml.jackson.annotation.JsonValue;
+
 //TODO: Enum -> Para ter enums mais seguros para futuras alteções precisa criar o construtor
 public enum Perfil {
     ADMIN(0, "ROLE_ADMIN"),
@@ -13,6 +16,7 @@ public enum Perfil {
         this.descricao = descricao;
     }
 
+    @JsonValue
     public Integer getCodigo() {
         return codigo;
     }
