@@ -43,6 +43,11 @@ public class ClienteService {
     public Cliente atualizarCliente(Integer id, ClienteDTO clienteDTO){
         clienteDTO.setId(id);
         Cliente cliente = buscarClientePorId(id);
+
+        if(!clienteDTO.getSenha().equals(cliente.getSenha())){
+            clienteDTO.setSenha(encoder.encode(cliente.getSenha()));
+        }
+
         validaPorCpfEemail(clienteDTO);
         cliente = new Cliente(clienteDTO);
         return clienteRepository.save(cliente);
@@ -51,7 +56,7 @@ public class ClienteService {
     public void deletarCliente(Integer id){
         Cliente cliente = buscarClientePorId(id);
 
-        if(cliente.getChamados().size() > 0){
+        if(!cliente.getChamados().isEmpty()){
             throw new DataIntegrityViolationException("Cliente possui ordens de serviço e não pode ser deletado !");
         }else {
             clienteRepository.deleteById(id);
