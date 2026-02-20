@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -35,7 +36,7 @@ public class TecnicoService {
     public Tecnico salvarTecnico(TecnicoDTO tecnicoDTO) {
         tecnicoDTO.setId(null);
         tecnicoDTO.setSenha(encoder.encode(tecnicoDTO.getSenha()));
-        validaPorCpfEemail(tecnicoDTO);
+        validaPorCpfEmail(tecnicoDTO);
         Tecnico nevoTecnico = new Tecnico(tecnicoDTO);
         return tecnicoRepository.save(nevoTecnico);
     }
@@ -48,7 +49,7 @@ public class TecnicoService {
             tecnicoDTO.setSenha(encoder.encode(tecnicoDTO.getSenha()));
         }
 
-        validaPorCpfEemail(tecnicoDTO);
+        validaPorCpfEmail(tecnicoDTO);
         tecnicoOld = new Tecnico(tecnicoDTO);
         return tecnicoRepository.save(tecnicoOld);
     }
@@ -60,14 +61,14 @@ public class TecnicoService {
             tecnicoRepository.deleteById(id);
         }
     }
-    private void validaPorCpfEemail(TecnicoDTO tecnicoDTO) {
+    private void validaPorCpfEmail(TecnicoDTO tecnicoDTO) {
         Optional<Pessoa> pessoa = pessoaRepository.findByCpf(tecnicoDTO.getCpf());
-        if (pessoa.isPresent() && pessoa.get().getId() != tecnicoDTO.getId()){
+        if (pessoa.isPresent() && !Objects.equals(pessoa.get().getId(), tecnicoDTO.getId())){
             throw new DataIntegrityViolationException("CPF já cadastrado no sistema !");
         }
 
         pessoa = pessoaRepository.findByEmail(tecnicoDTO.getEmail());
-        if (pessoa.isPresent() && pessoa.get().getId() != tecnicoDTO.getId()){
+        if (pessoa.isPresent() && !Objects.equals(pessoa.get().getId(), tecnicoDTO.getId())){
             throw new DataIntegrityViolationException("E-mail já cadastrado no sistema !");
         }
     }
