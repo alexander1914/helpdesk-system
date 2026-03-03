@@ -42,15 +42,15 @@ public class ClienteService {
 
     public Cliente atualizarCliente(Integer id, ClienteDTO clienteDTO){
         clienteDTO.setId(id);
-        Cliente cliente = buscarClientePorId(id);
+        Cliente oldCliente = buscarClientePorId(id);
 
-        if(!clienteDTO.getSenha().equals(cliente.getSenha())){
-            clienteDTO.setSenha(encoder.encode(cliente.getSenha()));
+        if(!clienteDTO.getSenha().equals(oldCliente.getSenha())){
+            clienteDTO.setSenha(encoder.encode(clienteDTO.getSenha()));
         }
 
         validaPorCpfEemail(clienteDTO);
-        cliente = new Cliente(clienteDTO);
-        return clienteRepository.save(cliente);
+        oldCliente = new Cliente(clienteDTO);
+        return clienteRepository.save(oldCliente);
     }
 
     public void deletarCliente(Integer id){
